@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { render, screen, cleanup, fireEvent } from "@testing-library/react"
 import App from "./App";
 
-describe("todo list", (): void => {
+describe("kan ban board", (): void => {
     afterEach(cleanup)
 
     it('it should have the correct title', (): void => {
@@ -11,7 +11,7 @@ describe("todo list", (): void => {
         screen.getByText(/tablero kan ban/i)
     })
 
-    it('should render an input with right placeholder and a button with "add" as label', (): void => {
+    it('should render an input with right placeholder and a button with "agregar" as label', (): void => {
         render(<App />)
 
         screen.getByPlaceholderText(/escribí tu tarea acá/i)
@@ -28,33 +28,7 @@ describe("todo list", (): void => {
         expect(columns[2].textContent).toMatch(/realizado/i)
     })
 
-    it('input should work', ():void => {
-        render(<App />)
-
-        const input: HTMLInputElement = screen.getByRole("textbox")
-        
-        fireEvent.change(input, {target: {value: "comprar milanesas"}})
-        expect(input.value).toEqual("comprar milanesas");
-    })
-
-    it('after submitting input has to clear and task has to exist in the first row of to-do column', ():void => {
-        render(<App />)
-
-        const input: HTMLInputElement = screen.getByRole("textbox")
-        
-        fireEvent.change(input, {target: {value: "comprar milanesas"}})
-        
-        expect(input.value).toEqual("comprar milanesas");
-
-        const submitButton = screen.getByRole("button", {name: /agregar/i})
-        fireEvent.click(submitButton)
-        expect(input.value).toEqual("");
-
-        const todoContainer = screen.getByTestId("todo-container")
-        expect(todoContainer.textContent).toMatch("comprar milanesas")
-    })
-
-    it('task can be moved between columns', (): void => {
+    it('task can be input into columns and moved between columns', (): void => {
         render(<App />)
 
         const input: HTMLInputElement = screen.getByRole("textbox")
