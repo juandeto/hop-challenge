@@ -5,7 +5,7 @@ import { Task, Status } from 'types';
 import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const [list, setList] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<Task[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
 
   function handleSubmitTask(e: FormEvent<HTMLFormElement>){
@@ -22,7 +22,7 @@ function App() {
         id: uuidv4(),
       }
 
-      setList([newTask, ...list])
+      setTasks([newTask, ...tasks])
 
       if (inputRef.current) {
         inputRef.current.value = '';
@@ -32,26 +32,21 @@ function App() {
 
   
   function handleTaskChange(id: string, newStatus: Status) {
+    let newtasks = []
     if(newStatus === "deleted") {
-      setList((prevTasks) => {
-        return prevTasks.filter((task) =>
-          task.id !== id
-        );
-      });
+      newtasks = tasks.filter((task) =>task.id !== id);
     } else {
-      setList((prevTasks) => {
-        return prevTasks.map((task) =>
-          task.id === id ? { ...task, status: newStatus } : task
-        );
-      });
-
+      newtasks = tasks.map((task) => task.id === id ? 
+                        { ...task, status: newStatus } : task);
     }
+
+    setTasks(newtasks);
   }
 
   
-  const todoTasks    = list.filter(task => task.status === 'todo')
-  const ongoingTasks = list.filter(task => task.status === 'doing')
-  const doneTasks    = list.filter(task => task.status === 'done')
+  const todoTasks    = tasks.filter(task => task.status === 'todo')
+  const ongoingTasks = tasks.filter(task => task.status === 'doing')
+  const doneTasks    = tasks.filter(task => task.status === 'done')
 
   return (
     <main className='container h-screen mx-auto flex-col p-3'>
