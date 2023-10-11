@@ -1,8 +1,8 @@
-import FormTask from './components/form';
 import { FormEvent, useRef, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
-import { Task, Status } from 'types';
+import FormTask from './components/form';
 import StatusColumn from './components/statusColumn';
+import { Task, Status } from 'types';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [list, setList] = useState<Task[]>([])
@@ -49,9 +49,9 @@ function App() {
   }
 
   
-  const todoTasks = list.filter(task => task.status === 'todo')
+  const todoTasks    = list.filter(task => task.status === 'todo')
   const ongoingTasks = list.filter(task => task.status === 'doing')
-  const doneTasks = list.filter(task => task.status === 'done')
+  const doneTasks    = list.filter(task => task.status === 'done')
 
   return (
     <main className='container h-screen mx-auto flex-col p-3'>
@@ -60,7 +60,7 @@ function App() {
         <section>
           <div className='flex flex-col md:flex-row justify-stretch items-start gap-2'>
             <StatusColumn
-            testId="todo-container"
+              testId="todo-container"
               title="Sin realizar"
               tasks={todoTasks}
               handleTaskAction={handleTaskChange}
@@ -76,7 +76,7 @@ function App() {
               newStatus="done"
             />
              <StatusColumn 
-             testId="done-container"
+              testId="done-container"
               title="Realizado"
               tasks={doneTasks}
               handleTaskAction={handleTaskChange}
